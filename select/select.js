@@ -1,4 +1,4 @@
-const getTemplate = (data = [], placeholder='') => `
+const getTemplate = (data = [], placeholder = '') => `
             <div class="select__input" data-type="input">
                 <span data-type="value">${placeholder}</span>
                 <i class="fas fa-chevron-down" data-type="arrow"></i>
@@ -10,7 +10,7 @@ const getTemplate = (data = [], placeholder='') => `
                                      data-id="${i.id}"
                                      >
                                 ${i.value}</li>`)
-                        .join('')}
+    .join('')}
                 </ul>
             </div>
 `
@@ -20,7 +20,8 @@ export class Select {
         this.$el = document.querySelector(selector)
         this.options = options
         this.selectId = null
-        this.onSelect = options.onSelect || function () {}
+        this.onSelect = options.onSelect || function () {
+        }
 
         this.#render()
         this.#setup()
@@ -45,7 +46,7 @@ export class Select {
 
     clickHandler(ev) {
         const {type} = ev.target.dataset
-        if (type === 'input') {
+        if (['input', 'value', 'arrow'].includes(type)) {
             this.toggle()
         }
         if (type === 'item') {
@@ -61,8 +62,8 @@ export class Select {
     select(id) {
         // unselect previous element
         this.selectId &&
-            this.$el.querySelector(`[data-id="${this.selectId}"]`)
-                .classList.remove('selected')
+        this.$el.querySelector(`[data-id="${this.selectId}"]`)
+            .classList.remove('selected')
         // set new selected id
         this.selectId = id
         // find new value
